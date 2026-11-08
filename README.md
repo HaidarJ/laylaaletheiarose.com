@@ -59,9 +59,9 @@ Remove any other `A` record on `@` (such as GoDaddy's parking record) and turn o
 
 ## Keeping things in step
 
-- **Prices** appear in `contact.html` (price cards and meta description), `terms.html` and the JSON-LD in `index.html`.
+- **Readings and prices** (Yes or No €10, Tree of Life €20, Inner Landscape €30) appear in `index.html` (Readings section and JSON-LD), `contact.html` (reading cards, the "Which reading?" choices and the meta description) and `terms.html`. Card links pass the reading to the form as `?reading=yesno|tree|inner`.
 - **Sample questions** live in `index.html` (the cards) and in the `QUESTIONS` map in `assets/js/site.js`. Keep the ids (`year`, `timing`, `decision`, `work`, `impasse`, `daily`, `relationship`, `home`) in sync.
-- **Contact details** (WhatsApp number and email) appear in `contact.html`, every page footer, `privacy.html`, `terms.html` and the JSON-LD in `index.html`.
+- **Contact details**: the WhatsApp number is in the form's `data-whatsapp` attribute in `contact.html` and in the floating WhatsApp button at the bottom of every page (`wa-float`). The email appears in `contact.html`, every page footer, `privacy.html`, `terms.html` and the JSON-LD in `index.html`.
 
 ## Design reference
 

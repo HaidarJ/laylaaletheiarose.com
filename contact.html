@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Book a Tarot Reading from £20 | Layla Aletheia Rose</title>
-<meta name="description" content="Send a short enquiry on WhatsApp. Live readings by video or phone from £20, or a written reading. Readings online for clients aged 18 and over.">
+<title>Book a Tarot Reading from €10 | Layla Aletheia Rose</title>
+<meta name="description" content="Send a short enquiry on WhatsApp. Yes or No, Tree of Life and Inner Landscape readings from €10, by video call, phone or in writing. For clients aged 18 and over.">
 <link rel="canonical" href="https://laylaaletheiarose.com/contact.html">
 <meta name="theme-color" content="#F3ECE8">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="Layla Aletheia Rose">
 <meta property="og:locale" content="en_GB">
 <meta property="og:title" content="Begin with your question | Layla Aletheia Rose">
-<meta property="og:description" content="Live tarot readings by video or phone from £20, or a written reading. Send a short enquiry on WhatsApp.">
+<meta property="og:description" content="Tarot readings from €10, by video call, phone or in writing. Send a short enquiry on WhatsApp.">
 <meta property="og:url" content="https://laylaaletheiarose.com/contact.html">
 <meta property="og:image" content="https://laylaaletheiarose.com/assets/img/og-image.jpg">
 <meta property="og:image:width" content="1200">
@@ -95,26 +95,29 @@
 
       <div style="margin-top:clamp(3rem, 7vw, 4.5rem)">
         <h2 class="h3" id="prices-title" style="margin-bottom:1.25rem;color:var(--subrosa)">Readings and prices</h2>
-        <div class="offers" role="list" aria-labelledby="prices-title" data-stagger="160">
-          <div class="offer" role="listitem" data-reveal>
-            <h3 class="offer__name">Live reading</h3>
-            <p class="offer__how">By video call or phone call, at a time we agree.</p>
-            <ul class="prices" role="list">
-              <li data-reveal><span>30 minutes</span><span class="amount">£20</span></li>
-              <li data-reveal><span>60 minutes</span><span class="amount">£35</span></li>
-            </ul>
-          </div>
-          <div class="offer" role="listitem" data-reveal>
-            <h3 class="offer__name">Written reading</h3>
-            <p class="offer__how">One question, answered in writing with photographs of the spreads, sent by email within 3 working days of payment.</p>
-            <ul class="prices" role="list">
-              <!-- TODO: price not decided yet. Replace "Price on request" with e.g. <span class="amount">£35</span> -->
-              <li data-reveal><span>One question</span><span class="amount amount--note">Price on request</span></li>
-            </ul>
-          </div>
-        </div>
-        <p class="small muted" style="margin-top:1rem">Prices are in pounds sterling. You pay by secure link once we’ve agreed the details.</p>
-        <p class="refund-policy"><strong>Refund policy:</strong> You may cancel before your reading begins for a full refund. If you miss a booked session and no reading has been carried out, you may request a refund. Once your reading has been completed, no refund is available.</p>
+        <p class="readings-how">Each reading can be given live by video call or phone call, or written and sent by email within 3 working days of payment.</p>
+        <ul class="reading-cards reading-cards--contact" role="list" aria-labelledby="prices-title" data-stagger="140">
+          <li class="reading-card" data-reveal>
+            <h3 class="reading-card__name">Yes or No</h3>
+            <p class="reading-card__price"><span class="visually-hidden">Price: </span>€10</p>
+            <p class="reading-card__desc">A single, clearly worded question, explored with a short and focused draw.</p>
+            <a class="reading-card__ask" href="contact.html?reading=yesno#enquiry" data-reading="yesno">Ask for this reading<span class="visually-hidden">: Yes or No</span> <span aria-hidden="true">→</span></a>
+          </li>
+          <li class="reading-card" data-reveal>
+            <h3 class="reading-card__name">Tree of Life</h3>
+            <p class="reading-card__price"><span class="visually-hidden">Price: </span>€20</p>
+            <p class="reading-card__desc">A wider spread based on the Tree of Life, looking at a situation across its practical, emotional and spiritual layers.</p>
+            <a class="reading-card__ask" href="contact.html?reading=tree#enquiry" data-reading="tree">Ask for this reading<span class="visually-hidden">: Tree of Life</span> <span aria-hidden="true">→</span></a>
+          </li>
+          <li class="reading-card" data-reveal>
+            <h3 class="reading-card__name">Inner Landscape</h3>
+            <p class="reading-card__price"><span class="visually-hidden">Price: </span>€30</p>
+            <p class="reading-card__desc">An in-depth reading of what is moving beneath the surface: the patterns, tensions and choices that may need your attention.</p>
+            <a class="reading-card__ask" href="contact.html?reading=inner#enquiry" data-reading="inner">Ask for this reading<span class="visually-hidden">: Inner Landscape</span> <span aria-hidden="true">→</span></a>
+          </li>
+        </ul>
+        <p class="small muted" style="margin-top:1rem">Prices are in euro. You pay by secure link once we’ve agreed the details.</p>
+        <p class="refund-policy" id="refund"><strong>Refund policy:</strong> You may cancel before your reading begins for a full refund. If you miss a booked session and no reading has been carried out, you may request a refund. Once your reading has been completed, no refund is available.</p>
       </div>
     </div>
   </section>
@@ -161,6 +164,15 @@
               <textarea id="enquiry-question" name="question" required maxlength="1500" aria-describedby="enquiry-question-hint enquiry-question-error"></textarea>
               <span class="counter" id="enquiry-counter" aria-hidden="true">0 / 1500</span>
             </div>
+            <fieldset class="field">
+              <legend>Which reading? <span class="optional">optional</span></legend>
+              <div class="choices">
+                <label class="choice"><input type="radio" name="reading" id="reading-yesno" value="Yes or No (€10)"><span>Yes or No · €10</span></label>
+                <label class="choice"><input type="radio" name="reading" id="reading-tree" value="Tree of Life (€20)"><span>Tree of Life · €20</span></label>
+                <label class="choice"><input type="radio" name="reading" id="reading-inner" value="Inner Landscape (€30)"><span>Inner Landscape · €30</span></label>
+                <label class="choice"><input type="radio" name="reading" id="reading-unsure" value="Not sure yet"><span>Not sure yet</span></label>
+              </div>
+            </fieldset>
             <fieldset class="field">
               <legend>Preferred format <span class="optional">optional</span></legend>
               <div class="choices">
@@ -218,7 +230,7 @@
           <details>
             <summary>How are readings delivered?</summary>
             <div class="answer">
-              <p>Live readings take place by video call or phone call at a time we agree, and last 30 or 60 minutes. Written readings answer one question and are sent by email within 3 working days of payment.</p>
+              <p>Each reading can be given live by video call or phone call at a time we agree, or written and sent by email within 3 working days of payment.</p>
             </div>
           </details>
           <details>
@@ -297,5 +309,12 @@
   </div>
 </footer>
 <script src="assets/js/site.js" defer></script>
+<!-- Floating WhatsApp button: fixed to the bottom right on every screen size -->
+<aside class="wa-dock" aria-label="WhatsApp chat">
+  <a class="wa-float" href="https://wa.me/353857364285?text=Hello%20Layla%2C%20I%E2%80%99d%20like%20to%20ask%20about%20a%20reading." target="_blank" rel="noopener" aria-label="Chat with Layla on WhatsApp (opens in a new tab)">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+    <span class="wa-float__label" aria-hidden="true">Chat on WhatsApp</span>
+  </a>
+</aside>
 </body>
 </html>

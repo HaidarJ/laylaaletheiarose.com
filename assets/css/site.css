@@ -930,3 +930,77 @@ body { overflow-x: clip; }
 /* Refund policy under the prices on the Contact page */
 .refund-policy { margin-top: 0.75rem; max-width: 46rem; font-size: 0.98rem; line-height: 1.55; color: var(--ink); padding: 0.85rem 1rem; border-left: 3px solid var(--ochre); background: var(--vellum-bright); }
 .refund-policy strong { color: var(--subrosa); }
+
+/* ==========================================================================
+   Readings and prices (Home section and Contact page)
+   ========================================================================== */
+.readings { overflow: hidden; }
+.reading-cards { list-style: none; display: grid; gap: 1.25rem; grid-template-columns: 1fr; }
+@media (min-width: 48rem) { .reading-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.reading-card {
+  position: relative; display: flex; flex-direction: column; gap: 0.85rem;
+  padding: clamp(1.5rem, 3vw, 2.1rem) clamp(1.35rem, 2.5vw, 1.9rem) clamp(1.35rem, 2.5vw, 1.75rem);
+  background: var(--vellum); border: 1px solid var(--line-light);
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+.reading-card::after { content: ""; position: absolute; inset: 6px; border: 1px solid rgba(166, 130, 74, 0.28); pointer-events: none; }
+.reading-cards--contact .reading-card { background: var(--vellum-bright); }
+.reading-card__name { font-size: clamp(1.7rem, 2.6vw, 2.05rem); color: var(--subrosa); line-height: 1.1; }
+.reading-card__price {
+  font-family: var(--f-text); font-weight: 500; font-size: 2.1rem; line-height: 1;
+  color: var(--rose); font-variant-numeric: lining-nums tabular-nums;
+  padding-bottom: 0.9rem; border-bottom: 1px solid var(--line-light);
+}
+.reading-card__desc { color: var(--ink); flex: 1; }
+.reading-card__ask {
+  position: relative; z-index: 1; align-self: flex-start;
+  font-family: var(--f-label); font-weight: 500; letter-spacing: 0.08em; text-transform: lowercase; font-size: 0.98rem;
+  color: var(--rose); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 0.15rem;
+}
+.reading-card__ask:hover { color: var(--rose-deep); }
+.reading-card:hover { border-color: var(--rose-light); box-shadow: 0 24px 50px -34px rgba(30, 22, 24, 0.45); }
+@media (prefers-reduced-motion: no-preference) { .reading-card:hover { transform: translateY(-3px); } }
+.readings-note { margin-top: 1.5rem; font-size: 0.98rem; color: var(--ink-soft); }
+.readings-how { margin-bottom: 1.25rem; color: var(--ink-soft); max-width: 46rem; }
+
+/* ==========================================================================
+   Floating WhatsApp button: bottom right on every page and screen size.
+   WhatsApp teal-green (#128C7E) keeps the white icon above 3:1 contrast and
+   stands out on both the dark and the light sections.
+   ========================================================================== */
+.wa-float {
+  position: fixed; z-index: 60;
+  right: max(1.25rem, calc(env(safe-area-inset-right, 0px) + 1rem));
+  bottom: max(1.25rem, calc(env(safe-area-inset-bottom, 0px) + 1rem));
+  width: 3.75rem; height: 3.75rem; border-radius: 50%;
+  display: grid; place-items: center;
+  background: #128C7E; color: #FFFFFF; text-decoration: none;
+  box-shadow: 0 12px 28px -10px rgba(18, 140, 126, 0.65), 0 4px 14px rgba(0, 0, 0, 0.28);
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.wa-float svg { width: 1.95rem; height: 1.95rem; }
+.wa-float:hover { background: #0F7A6E; color: #FFFFFF; transform: translateY(-2px); }
+.wa-float:focus-visible { outline: 3px solid var(--rose); outline-offset: 3px; }
+.wa-float__label {
+  position: absolute; right: calc(100% + 0.75rem); top: 50%; transform: translateY(-50%);
+  white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity 0.2s ease;
+  background: var(--subrosa); color: var(--vellum); padding: 0.45rem 0.85rem;
+  font-family: var(--f-label); font-weight: 500; font-size: 0.9rem; letter-spacing: 0.06em; text-transform: lowercase;
+  box-shadow: 0 8px 20px -10px rgba(0, 0, 0, 0.5);
+}
+@media (hover: hover) and (pointer: fine) {
+  .wa-float:hover .wa-float__label, .wa-float:focus-visible .wa-float__label { opacity: 1; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .wa-float { animation: wa-in 0.6s var(--ease-out, ease-out) backwards 1.2s; }
+  @keyframes wa-in { from { opacity: 0; transform: translateY(12px) scale(0.9); } to { opacity: 1; transform: none; } }
+}
+/* Phones: slightly smaller, still bottom right; footer gets room so the button never covers its last line */
+@media (max-width: 47.99rem) {
+  .wa-float { width: 3.4rem; height: 3.4rem; }
+  .wa-float svg { width: 1.75rem; height: 1.75rem; }
+}
+@media (max-width: 63.99rem) {
+  .site-footer { padding-bottom: calc(2.5rem + 4.75rem); }
+}
+@media print { .wa-float { display: none; } }

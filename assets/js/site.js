@@ -34,6 +34,13 @@
       store(STORE_KEY, link.getAttribute("data-question"));
     });
   });
+  // "Ask for this reading" cards carry the chosen reading into the form.
+  var READING_KEY = "lar-reading";
+  document.querySelectorAll("[data-reading]").forEach(function (link) {
+    link.addEventListener("click", function () {
+      store(READING_KEY, link.getAttribute("data-reading"));
+    });
+  });
 
   /* ---------- Contact form ---------- */
   var form = document.getElementById("enquiry-form");
@@ -62,6 +69,12 @@
     if (prefillNote) prefillNote.hidden = false;
   }
   forget(STORE_KEY);
+
+  // Pre-select the reading chosen on a reading card.
+  var chosenReading = params.get("reading") || recall(READING_KEY);
+  var readingInput = chosenReading && /^[a-z]+$/.test(chosenReading) ? document.getElementById("reading-" + chosenReading) : null;
+  if (readingInput && readingInput.name === "reading") readingInput.checked = true;
+  forget(READING_KEY);
 
   function updateCounter() {
     if (counter) counter.textContent = fields.question.value.length + " / " + max;
@@ -161,10 +174,12 @@
 
   function compose() {
     var format = form.querySelector('input[name="format"]:checked');
+    var reading = form.querySelector('input[name="reading"]:checked');
     var lines = ["Hello Layla, I’d like to enquire about a reading.", ""];
     lines.push("Name: " + fields.name.value.trim());
     lines.push("Contact number: " + fields.phone.value.trim());
     lines.push("Email: " + fields.email.value.trim());
+    if (reading) lines.push("Reading: " + reading.value);
     if (format) lines.push("Preferred format: " + format.value);
     lines.push("", "What I’d like to explore:", fields.question.value.trim(), "");
     lines.push("I confirm I am 18 or over.");
