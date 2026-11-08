@@ -41,11 +41,14 @@
 
   var fields = {
     name: document.getElementById("enquiry-name"),
+    phone: document.getElementById("enquiry-phone"),
     email: document.getElementById("enquiry-email"),
     question: document.getElementById("enquiry-question"),
     age: document.getElementById("enquiry-age"),
     consent: document.getElementById("enquiry-consent")
   };
+  var summary = document.getElementById("enquiry-errors");
+  var summaryList = document.getElementById("enquiry-errors-list");
   var counter = document.getElementById("enquiry-counter");
   var status = document.getElementById("enquiry-status");
   var prefillNote = document.getElementById("enquiry-prefill");
@@ -66,39 +69,93 @@
   fields.question.addEventListener("input", updateCounter);
   updateCounter();
 
-  function setError(input, message) {
+  /* Each check returns "" when the field is fine, or a message saying exactly what to fix. */
+  var CHECKS = {
+    name: function () {
+      return fields.name.value.trim() ? "" : "Please enter your name.";
+    },
+    phone: function () {
+      var v = fields.phone.value.trim();
+      if (!v) return "Please enter your contact number.";
+      var digits = v.replace(/\D/g, "");
+      if (!/^[+0-9()\-.\s]+$/.test(v) || digits.length < 7 || digits.length > 15) {
+        return "Please enter a full contact number, for example +44 7700 900123.";
+      }
+      return "";
+    },
+    email: function () {
+      var v = fields.email.value.trim();
+      if (!v) return "Please enter your email address.";
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return "Please enter a complete email address, for example name@example.com.";
+      return "";
+    },
+    question: function () {
+      return fields.question.value.trim() ? "" : "Please write a few words about what you’d like to explore.";
+    },
+    age: function () {
+      return fields.age.checked ? "" : "Please tick the box to confirm you are 18 or over.";
+    },
+    consent: function () {
+      return fields.consent.checked ? "" : "Please tick the box so I can use what you share to reply.";
+    }
+  };
+  var ORDER = ["name", "phone", "email", "question", "age", "consent"];
+  var flagged = {}; // fields currently showing an error, by key
+
+  function setError(key, message) {
+    var input = fields[key];
     var error = document.getElementById(input.id + "-error");
+    var wrap = input.closest(".field");
     if (message) {
+      flagged[key] = message;
       input.setAttribute("aria-invalid", "true");
-      if (error) { error.textContent = message; error.hidden = false; }
+      if (wrap) wrap.classList.add("field--error");
+      if (error) {
+        error.innerHTML = "";
+        var tag = document.createElement("span");
+        tag.className = "visually-hidden";
+        tag.textContent = "Error: ";
+        error.appendChild(tag);
+        error.appendChild(document.createTextNode(message));
+        error.hidden = false;
+      }
     } else {
+      delete flagged[key];
       input.removeAttribute("aria-invalid");
+      if (wrap) wrap.classList.remove("field--error");
       if (error) { error.textContent = ""; error.hidden = true; }
     }
   }
 
+  // The summary at the top of the form lists every part still to fill in, each linked to its field.
+  function renderSummary() {
+    if (!summary || !summaryList) return;
+    summaryList.innerHTML = "";
+    ORDER.forEach(function (key) {
+      if (!flagged[key]) return;
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      a.href = "#" + fields[key].id;
+      a.textContent = flagged[key];
+      a.addEventListener("click", function (e) {
+        e.preventDefault();
+        fields[key].focus();
+        fields[key].scrollIntoView({ block: "center" });
+      });
+      li.appendChild(a);
+      summaryList.appendChild(li);
+    });
+    summary.hidden = !summaryList.children.length;
+  }
+
   function validate() {
     var problems = [];
-    var name = fields.name.value.trim();
-    var email = fields.email.value.trim();
-    var question = fields.question.value.trim();
-
-    setError(fields.name, name ? "" : "Please tell me your name.");
-    if (!name) problems.push(fields.name);
-
-    var emailOk = !email || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    setError(fields.email, emailOk ? "" : "This email address doesn’t look complete. Check it, or leave the field empty.");
-    if (!emailOk) problems.push(fields.email);
-
-    setError(fields.question, question ? "" : "Please write a few words about what you’d like to explore.");
-    if (!question) problems.push(fields.question);
-
-    setError(fields.age, fields.age.checked ? "" : "Readings are for clients aged 18 and over.");
-    if (!fields.age.checked) problems.push(fields.age);
-
-    setError(fields.consent, fields.consent.checked ? "" : "Please tick this so I can use what you share to reply.");
-    if (!fields.consent.checked) problems.push(fields.consent);
-
+    ORDER.forEach(function (key) {
+      var message = CHECKS[key]();
+      setError(key, message);
+      if (message) problems.push(fields[key]);
+    });
+    renderSummary();
     return problems;
   }
 
@@ -106,7 +163,8 @@
     var format = form.querySelector('input[name="format"]:checked');
     var lines = ["Hello Layla, I’d like to enquire about a reading.", ""];
     lines.push("Name: " + fields.name.value.trim());
-    if (fields.email.value.trim()) lines.push("Email: " + fields.email.value.trim());
+    lines.push("Contact number: " + fields.phone.value.trim());
+    lines.push("Email: " + fields.email.value.trim());
     if (format) lines.push("Preferred format: " + format.value);
     lines.push("", "What I’d like to explore:", fields.question.value.trim(), "");
     lines.push("I confirm I am 18 or over.");
@@ -129,7 +187,13 @@
     event.preventDefault();
     var problems = validate();
     if (problems.length) {
-      problems[0].focus();
+      if (status) status.hidden = true;
+      if (summary) {
+        summary.focus({ preventScroll: true });
+        summary.scrollIntoView({ block: "start", behavior: "smooth" });
+      } else {
+        problems[0].focus();
+      }
       return;
     }
 
@@ -167,15 +231,18 @@
     }
   });
 
-  // Clear an error as soon as the visitor fixes it.
-  ["name", "email", "question"].forEach(function (key) {
+  // Once a field is flagged, clear its error (and its line in the summary) as soon as it's fixed.
+  ["name", "phone", "email", "question"].forEach(function (key) {
     fields[key].addEventListener("input", function () {
-      if (fields[key].getAttribute("aria-invalid") === "true") setError(fields[key], "");
+      if (flagged[key] && !CHECKS[key]()) { setError(key, ""); renderSummary(); }
+    });
+    fields[key].addEventListener("blur", function () {
+      if (flagged[key]) { setError(key, CHECKS[key]()); renderSummary(); }
     });
   });
   ["age", "consent"].forEach(function (key) {
     fields[key].addEventListener("change", function () {
-      if (fields[key].checked) setError(fields[key], "");
+      if (flagged[key] && !CHECKS[key]()) { setError(key, ""); renderSummary(); }
     });
   });
 })();

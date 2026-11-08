@@ -370,7 +370,7 @@ em { font-style: italic; }
 }
 .field .optional { font-family: var(--f-text); text-transform: none; letter-spacing: 0; font-style: italic; color: var(--ink-soft); font-size: 0.95rem; margin-left: 0.35rem; }
 .field .hint { font-size: 0.98rem; color: var(--ink-soft); line-height: 1.5; }
-.field input[type="text"], .field input[type="email"], .field textarea {
+.field input[type="text"], .field input[type="tel"], .field input[type="email"], .field textarea {
   width: 100%; font: inherit; font-size: 1.05rem; color: var(--subrosa);
   background: var(--vellum-bright); border: 1px solid #C9B2AB; border-radius: 0;
   padding: 0.8rem 0.9rem; min-height: 3rem;
@@ -865,3 +865,42 @@ body { overflow-x: clip; }
 .hero--layered .hero__title { text-shadow: 0 2px 30px rgba(20, 14, 16, 0.6); }
 .hero--layered .actions { justify-content: center; }
 @media (max-width: 55.99rem) { .hero--layered .hero-art { opacity: 0.55; max-width: 30rem; } }
+
+/* ==========================================================================
+   Enquiry form errors (v4): say exactly which part needs filling in.
+   A summary at the top lists every problem; each field shows its own message.
+   ========================================================================== */
+.form-intro { font-size: 0.98rem; color: var(--ink-soft); margin-bottom: -0.5rem; }
+.error-summary {
+  display: grid; gap: 0.45rem;
+  background: var(--vellum-bright); color: var(--ink);
+  border: 2px solid var(--error); border-left-width: 6px;
+  padding: 1.1rem 1.25rem 1.25rem;
+  scroll-margin-top: 6rem;
+}
+.error-summary:focus { outline: 3px solid rgba(138, 54, 68, 0.35); outline-offset: 3px; }
+.error-summary__title { font-family: var(--f-display); font-size: 1.5rem; line-height: 1.2; color: var(--error); }
+.error-summary__list { list-style: none; display: grid; gap: 0.4rem; margin-top: 0.2rem; }
+.error-summary__list li { display: flex; gap: 0.6rem; align-items: baseline; }
+.error-summary__list li::before { content: ""; width: 0.45rem; height: 0.45rem; border-radius: 50%; background: var(--error); flex: none; transform: translateY(-0.1rem); }
+.error-summary__list a { color: var(--error); font-weight: 500; text-decoration-thickness: 2px; text-underline-offset: 0.18em; }
+.error-summary__list a:hover { color: var(--rose-deep); }
+
+.field--error { border-left: 4px solid var(--error); padding-left: 0.9rem; }
+.field--error > label, .field--error > legend { color: var(--error); }
+.field .error {
+  display: flex; gap: 0.55rem; align-items: flex-start;
+  font-style: normal; font-weight: 500; font-size: 1rem; line-height: 1.4; color: var(--error);
+}
+.field .error::before {
+  content: "!"; flex: none; display: inline-grid; place-items: center;
+  width: 1.3rem; height: 1.3rem; border-radius: 50%;
+  background: var(--error); color: var(--vellum);
+  font-family: var(--f-text); font-size: 0.85rem; font-weight: 600; line-height: 1;
+  margin-top: 0.05rem;
+}
+.field--error input[type="text"], .field--error input[type="tel"],
+.field--error input[type="email"], .field--error textarea {
+  border: 2px solid var(--error); background: #FFF8F8;
+}
+.field--error .check input { outline: 2px solid var(--error); outline-offset: 2px; }
