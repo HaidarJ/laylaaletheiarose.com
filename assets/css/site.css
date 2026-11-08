@@ -908,3 +908,21 @@ body { overflow-x: clip; }
 /* Footer credit: underline so the link is recognisable without relying on colour */
 .footer-base a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; text-decoration-color: rgba(243, 236, 232, 0.6); }
 .footer-base a:hover { color: var(--rose-light); text-decoration-color: currentColor; }
+
+/* ---------- Social links (Instagram, YouTube) ---------- */
+.social { display: inline-flex; align-items: center; gap: 0.15rem; }
+.social--header { padding-right: clamp(0.5rem, 1.4vw, 0.9rem); border-right: 1px solid color-mix(in srgb, currentColor 28%, transparent); }
+.social__link {
+  display: inline-grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: 50%;
+  color: inherit; transition: color 0.2s ease, background-color 0.2s ease;
+}
+.social__link svg { width: 1.15rem; height: 1.15rem; }
+.site-header--dark .social__link:hover { color: var(--rose-light); background: rgba(243, 236, 232, 0.07); }
+.site-header--light .social__link:hover { color: var(--rose); background: rgba(138, 54, 68, 0.07); }
+/* Phones: no room beside the navigation, so the icons live in the footer only */
+@media (max-width: 35.99rem) { .social--header { display: none; } }
+
+.footer-title--follow { margin-top: 1.75rem; }
+.footer-social a { display: inline-flex; align-items: center; gap: 0.6rem; }
+.footer-social svg { width: 1.1rem; height: 1.1rem; flex: none; color: var(--ochre-light); }
+.footer-social a:hover svg { color: inherit; }
