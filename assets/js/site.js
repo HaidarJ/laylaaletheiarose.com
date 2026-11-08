@@ -276,10 +276,19 @@
     });
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
+        if (!e.isIntersecting) return;
+        (e.target.__reveal || [e.target]).forEach(function (el) { el.classList.add("is-in"); });
+        io.unobserve(e.target);
       });
     }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
-    revealEls.forEach(function (el) { io.observe(el); });
+    revealEls.forEach(function (el) {
+      // An element hidden by clip-path (the signature) has no visible area until it is revealed,
+      // so the observer would never see it. Watch its parent instead.
+      var clipped = getComputedStyle(el).clipPath !== "none";
+      var watch = clipped && el.parentElement ? el.parentElement : el;
+      (watch.__reveal = watch.__reveal || []).push(el);
+      io.observe(watch);
+    });
   }
 
   /* ---------- Parallax ---------- */

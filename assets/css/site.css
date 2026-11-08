@@ -926,3 +926,7 @@ body { overflow-x: clip; }
 .footer-social a { display: inline-flex; align-items: center; gap: 0.6rem; }
 .footer-social svg { width: 1.1rem; height: 1.1rem; flex: none; color: var(--ochre-light); }
 .footer-social a:hover svg { color: inherit; }
+
+/* Refund policy under the prices on the Contact page */
+.refund-policy { margin-top: 0.75rem; max-width: 46rem; font-size: 0.98rem; line-height: 1.55; color: var(--ink); padding: 0.85rem 1rem; border-left: 3px solid var(--ochre); background: var(--vellum-bright); }
+.refund-policy strong { color: var(--subrosa); }
