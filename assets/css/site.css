@@ -1004,3 +1004,24 @@ body { overflow-x: clip; }
   .site-footer { padding-bottom: calc(2.5rem + 4.75rem); }
 }
 @media print { .wa-float { display: none; } }
+
+/* ==========================================================================
+   Home hero with Layla's portrait: text on the left, portrait on the right.
+   The photo sits in the same arch of light the line art used, so the arch's
+   reveal animation and inner frame carry over.
+   ========================================================================== */
+.hero--portrait .hero__grid { align-items: center; }
+.hero--portrait .hero__copy { text-align: left; justify-items: start; }
+.hero-portrait { margin-block: 0; }
+.arch--photo { aspect-ratio: 4 / 5; background: #150F11; }
+.arch--photo picture, .arch--photo img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.arch--photo picture { z-index: 1; }
+.arch--photo img { object-fit: cover; object-position: 50% 28%; }
+.arch--photo::before { opacity: 0.05; }
+/* Keep the floating cards to the portrait's edges so they never cross the face */
+.hero-portrait .tcard { width: 27%; }
+.hero-portrait .tcard--a { right: -2%; top: 52%; }
+.hero-portrait .tcard--b { left: -2%; bottom: 2%; width: 24%; }
+@media (max-width: 55.99rem) {
+  .hero--portrait .hero-art { max-width: 24rem; }
+}
