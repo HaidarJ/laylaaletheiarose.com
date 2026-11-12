@@ -1071,3 +1071,13 @@ body { overflow-x: clip; }
   color: var(--rose-light); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 0.15rem; white-space: nowrap;
 }
 .consult-card__ask:hover { color: var(--vellum); }
+
+/* ==========================================================================
+   Home: Hypnotherapy areas, directly under the hero
+   ========================================================================== */
+.hypno { border-bottom: 1px solid var(--line-light); }
+.hypno-card { min-height: 0; }
+.hypno-note {
+  margin-top: 1.5rem; max-width: 46rem; font-size: 0.98rem; line-height: 1.55; color: var(--ink);
+  padding: 0.85rem 1rem; border-left: 3px solid var(--ochre); background: var(--vellum);
+}

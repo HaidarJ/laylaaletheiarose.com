@@ -179,7 +179,7 @@
     lines.push("Name: " + fields.name.value.trim());
     lines.push("Contact number: " + fields.phone.value.trim());
     lines.push("Email: " + fields.email.value.trim());
-    if (reading) lines.push("Reading: " + reading.value);
+    if (reading) lines.push("Interested in: " + reading.value);
     if (format) lines.push("Preferred format: " + format.value);
     lines.push("", "What I’d like to explore:", fields.question.value.trim(), "");
     lines.push("I confirm I am 18 or over.");
